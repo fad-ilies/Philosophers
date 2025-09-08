@@ -6,7 +6,7 @@
 /*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 22:32:55 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/03 22:55:59 by ifadhli          ###   ########.fr       */
+/*   Updated: 2025/09/08 22:51:12 by ifadhli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,33 @@
 
 int	check_args(int ac)
 {
-	if (ac < 5)
-		return (1);
-	else if (ac > 6)
-		return (1);
-	else
+	if (ac == 5 || ac == 6)
 		return (0);
+	return (1);
 }
 
-int	ft_atoi(char *str)
+int	pars_pos_int(char *str)
 {
 	int	i;
-	int	res;
+	long long	res;
 
 	i = 0;
 	res = 0;
-	if (str[i] == '-')
-		return (1);
+	if (!str || !str[0])
+		return (-1);
+	if (str[i] == '+')
+		i++;
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return (1);
-		if (str[i] >= '0' && str[i] <= '9')
-			res = res * 10 + (str[i] - '0');
+			return (-1);
+		res = res * 10 + (str[i] - '0');
 		if (res > INT_MAX)
-			return (1);
+			return (-1);
 		i++;
 	}
+	if (res <= 0)
+		return (-1);
 	return (res);
 }
+
