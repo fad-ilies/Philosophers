@@ -1,30 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_simulation.c                                 :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 18:57:18 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/09 20:03:55 by ifadhli          ###   ########.fr       */
+/*   Created: 2025/09/03 22:32:55 by ifadhli           #+#    #+#             */
+/*   Updated: 2025/09/13 20:38:21 by ifadhli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int start_simulation(t_data *data)
+int	pars_pos_int(char *str)
 {
-    int i;
+	int			i;
+	long long	res;
 
-    i = 0;
-    while (i < data->rules.nb_philo)
-    {
-        if (pthread_create(&data->philos[i].thread), NULL, routine, &data->philos[i] != 0)
-        {
-            printf("Error : Mauvaise init des thread\n");
-            return (1);
-        }
-        i++;
-    }
-    return (0);
+	i = 0;
+	res = 0;
+	if (!str || !str[0])
+		return (-1);
+	if (str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (-1);
+		res = res * 10 + (str[i] - '0');
+		if (res > INT_MAX)
+			return (-1);
+		i++;
+	}
+	if (res <= 0)
+		return (-1);
+	return ((int)res);
 }
+
+int	check_args(int ac)
+{
+	if (ac == 5 || ac == 6)
+		return (0);
+	return (1);
+}
+
