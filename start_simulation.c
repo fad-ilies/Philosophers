@@ -6,7 +6,7 @@
 /*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 19:14:34 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/14 19:14:50 by ifadhli          ###   ########.fr       */
+/*   Updated: 2025/09/14 19:34:14 by ifadhli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	create_philo_threads(t_data *data)
 	while (i < data->rules.nb_philo)
 	{
 		data->philos[i].last_eat = data->rules.start_time;
-		if (pthread_create(&data->philos[i].thread, NULL,
-				routine, &data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].thread, NULL, routine,
+				&data->philos[i]) != 0)
 		{
 			printf("Error : mauvaise init des threads\n");
 			return (1);

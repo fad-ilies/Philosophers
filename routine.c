@@ -6,19 +6,7 @@
 /*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 19:14:11 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/14 19:21:11 by ifadhli          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/09 19:14:11 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/14 20:55:42 by ifadhli          ###   ########.fr       */
+/*   Updated: 2025/09/14 19:34:21 by ifadhli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +46,7 @@ void	*routine(void *arg)
 	while (!get_stop(philo->rules))
 	{
 		philo_eat(philo);
-		if (philo->rules->nb_meal != -1
-			&& philo->ate >= philo->rules->nb_meal)
+		if (philo->rules->nb_meal != -1 && philo->ate >= philo->rules->nb_meal)
 			break ;
 		philo_sleep_think(philo);
 	}
@@ -70,8 +57,7 @@ static int	check_death(t_data *data, int i, long long *time_since_meal)
 {
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
 	*time_since_meal = get_time() - data->philos[i].last_eat;
-	if (data->rules.nb_meal != -1
-		&& data->philos[i].ate >= data->rules.nb_meal)
+	if (data->rules.nb_meal != -1 && data->philos[i].ate >= data->rules.nb_meal)
 	{
 		pthread_mutex_unlock(&data->philos[i].meal_mutex);
 		return (1);
@@ -92,6 +78,7 @@ void	*monitor_routine(void *arg)
 	int			i;
 	int			full_count;
 	long long	time_since_meal;
+	int			status;
 
 	data = (t_data *)arg;
 	while (!get_stop(&data->rules))
@@ -100,15 +87,14 @@ void	*monitor_routine(void *arg)
 		i = 0;
 		while (i < data->rules.nb_philo)
 		{
-			int status = check_death(data, i, &time_since_meal);
+			status = check_death(data, i, &time_since_meal);
 			if (status == -1)
 				return (NULL);
 			else if (status == 1)
 				full_count++;
 			i++;
 		}
-		if (data->rules.nb_meal != -1
-			&& full_count == data->rules.nb_philo)
+		if (data->rules.nb_meal != -1 && full_count == data->rules.nb_philo)
 			return (set_stop(&data->rules), NULL);
 		usleep(1000);
 	}
