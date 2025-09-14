@@ -6,7 +6,7 @@
 /*   By: ifadhli <ifadhli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 23:00:30 by ifadhli           #+#    #+#             */
-/*   Updated: 2025/09/13 21:19:14 by ifadhli          ###   ########.fr       */
+/*   Updated: 2025/09/14 18:44:21 by ifadhli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,15 @@ int init_philosophers(t_data *data)
         data->philos[i].id = i + 1;
         data->philos[i].rules = &data->rules;
         data->philos[i].ate = 0;
-        data->philos[i].last_eat = get_time(); // ✅ initialisé correctement
+        data->philos[i].last_eat = get_time();
         data->philos[i].left_fork = &data->forks[i];
         data->philos[i].right_fork = &data->forks[(i + 1) % data->rules.nb_philo];
-        if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0) // ✅ init du mutex
+        if (pthread_mutex_init(&data->philos[i].meal_mutex, NULL) != 0)
             return (1);
         i++;
     }
     return (0);
 }
-
-// int	init_philosophers(t_data *data)
-// {
-// 	int	i;
-
-// 	data->philos = malloc(sizeof(t_philo) * data->rules.nb_philo);
-// 	if (!data->philos)
-// 		return (1);
-// 	i = 0;
-// 	while (i < data->rules.nb_philo)
-// 	{
-// 		data->philos[i].id = i + 1;
-// 		data->philos[i].rules = &data->rules;
-// 		data->philos[i].ate = 0;
-// 		data->philos[i].last_eat = get_time();
-// 		data->philos[i].left_fork = &data->forks[i];
-// 		data->philos[i].right_fork = &data->forks[(i + 1)
-// 			% data->rules.nb_philo];
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 int	init_mutex(t_data *data)
 {
